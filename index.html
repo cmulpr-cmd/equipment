@@ -6,7 +6,7 @@
 <title>ระบบเช็คอุปกรณ์คงเหลือ | Equipment Inventory</title>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800;900&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     min-height: 100vh;
@@ -14,227 +14,250 @@
     font-family: 'Noto Sans Thai', 'Kanit', -apple-system, sans-serif;
     overflow-x: hidden;
   }
+
+  /* Decorative background blobs */
   body::before, body::after {
-    content:''; position:fixed; border-radius:50%; pointer-events:none; z-index:0;
+    content: ''; position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
   }
-  body::before { top:-120px; right:-80px; width:350px; height:350px; background:radial-gradient(circle,#A78BFA20 0%,transparent 70%); }
-  body::after { bottom:-100px; left:-60px; width:300px; height:300px; background:radial-gradient(circle,#4ECDC420 0%,transparent 70%); }
+  body::before { top: -120px; right: -80px; width: 350px; height: 350px; background: radial-gradient(circle, #A78BFA20 0%, transparent 70%); }
+  body::after { bottom: -100px; left: -60px; width: 300px; height: 300px; background: radial-gradient(circle, #4ECDC420 0%, transparent 70%); }
 
-  .container { max-width:960px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-  /* Header */
-  .header { padding-top:40px; display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:16px; }
-  .header-left { display:flex; align-items:center; gap:12px; }
-  .header-icon { font-size:36px; animation:float 3s ease-in-out infinite; }
+  /* ============ HEADER ============ */
+  .header {
+    padding-top: 40px; display: flex; align-items: flex-start;
+    justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-icon { font-size: 36px; animation: float 3s ease-in-out infinite; }
   .header h1 {
-    font-size:clamp(24px,5vw,34px); font-weight:900;
-    background:linear-gradient(135deg,#4ECDC4 0%,#7C3AED 50%,#FF6B35 100%);
-    background-size:200% 200%; animation:gradientMove 6s ease infinite;
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    background-clip:text; font-family:'Kanit',sans-serif;
+    font-size: clamp(24px, 5vw, 34px); font-weight: 900;
+    background: linear-gradient(135deg, #4ECDC4 0%, #7C3AED 50%, #FF6B35 100%);
+    background-size: 200% 200%; animation: gradientMove 6s ease infinite;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; font-family: 'Kanit', sans-serif;
   }
-  .header-sub { color:#64748B; font-size:14px; font-weight:500; padding-left:50px; margin-top:4px; }
-  .header-right { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .header-sub { color: #64748B; font-size: 14px; font-weight: 500; padding-left: 50px; margin-top: 4px; }
+  .header-right { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
   .btn-admin {
-    padding:12px 24px; border-radius:14px; border:2px solid #E2E8F0;
-    background:#FFF; color:#64748B; font-size:14px; font-weight:700;
-    cursor:pointer; display:flex; align-items:center; gap:8px;
-    transition:all .3s; font-family:'Kanit',sans-serif;
-    box-shadow:0 2px 8px rgba(0,0,0,.04);
+    padding: 12px 24px; border-radius: 14px; border: 2px solid #E2E8F0;
+    background: #FFF; color: #64748B; font-size: 14px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    transition: all 0.3s; font-family: 'Kanit', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
-  .btn-admin:hover { border-color:#A78BFA; color:#7C3AED; box-shadow:0 8px 20px #A78BFA20; }
+  .btn-admin:hover { border-color: #A78BFA; color: #7C3AED; box-shadow: 0 8px 20px #A78BFA20; }
 
-  .conn-badge {
-    padding:8px 16px; border-radius:12px; font-size:12px; font-weight:700;
-    display:flex; align-items:center; gap:6px;
+  .cloud-badge {
+    padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px; background: #DBEAFE; color: #2563EB;
   }
-  .conn-badge.online { background:#DBEAFE; color:#2563EB; }
-  .conn-badge .dot { width:8px; height:8px; border-radius:50%; background:#2563EB; animation:pulse 2s infinite; }
+  .cloud-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #2563EB; animation: pulse 2s infinite; }
 
   .btn-refresh {
-    padding:10px 18px; border-radius:12px; border:2px solid #E2E8F0;
-    background:#FFF; color:#64748B; font-size:13px; font-weight:700;
-    cursor:pointer; display:flex; align-items:center; gap:6px;
-    transition:all .3s; font-family:'Kanit',sans-serif;
+    padding: 10px 18px; border-radius: 12px; border: 2px solid #E2E8F0;
+    background: #FFF; color: #64748B; font-size: 13px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; gap: 6px;
+    transition: all 0.3s; font-family: 'Kanit', sans-serif;
   }
-  .btn-refresh:hover { border-color:#4ECDC4; color:#0D9488; }
+  .btn-refresh:hover { border-color: #4ECDC4; color: #0D9488; }
 
-  /* Stats */
-  .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-top:28px; }
-  .stat-card { border-radius:16px; padding:18px 20px; animation:cardIn .5s ease both; }
-  .stat-label { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
-  .stat-label span:last-child { font-size:12px; color:#64748B; font-weight:600; }
-  .stat-value { display:flex; align-items:baseline; gap:4px; }
-  .stat-num { font-size:28px; font-weight:900; font-family:'Kanit',sans-serif; }
-  .stat-unit { font-size:12px; color:#94A3B8; font-weight:600; }
+  /* ============ STATS ROW ============ */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin-top: 28px;
+  }
+  .stat-card { border-radius: 16px; padding: 18px 20px; animation: cardIn 0.5s ease both; }
+  .stat-label { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .stat-label span:last-child { font-size: 12px; color: #64748B; font-weight: 600; }
+  .stat-value { display: flex; align-items: baseline; gap: 4px; }
+  .stat-num { font-size: 28px; font-weight: 900; font-family: 'Kanit', sans-serif; }
+  .stat-unit { font-size: 12px; color: #94A3B8; font-weight: 600; }
 
+  /* ============ UPDATE BANNER ============ */
   .update-banner {
-    margin-top:20px; padding:14px 20px; border-radius:14px;
-    background:linear-gradient(135deg,#1E293B 0%,#334155 100%);
-    display:flex; align-items:center; justify-content:center; gap:10px;
-    animation:cardIn .6s ease .4s both; flex-wrap:wrap;
+    margin-top: 20px; padding: 14px 20px; border-radius: 14px;
+    background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    animation: cardIn 0.6s ease 0.4s both; flex-wrap: wrap;
   }
-  .update-banner .lbl { color:#94A3B8; font-size:13px; font-weight:500; }
-  .update-banner .time { color:#FFF; font-size:14px; font-weight:700; font-family:'Kanit',sans-serif; }
+  .update-banner .lbl { color: #94A3B8; font-size: 13px; font-weight: 500; }
+  .update-banner .time { color: #FFF; font-size: 14px; font-weight: 700; font-family: 'Kanit', sans-serif; }
 
-  /* Grid */
+  /* ============ EQUIPMENT GRID ============ */
   .equip-grid {
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-    gap:20px; padding:28px 0 60px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px; padding: 28px 0 60px;
   }
   .equip-card {
-    background:#FFF; border-radius:20px; padding:28px 24px;
-    position:relative; overflow:hidden;
-    box-shadow:0 4px 24px rgba(0,0,0,.06),0 1px 4px rgba(0,0,0,.04);
-    transition:all .4s cubic-bezier(.34,1.56,.64,1);
-    border:2px solid transparent;
+    background: #FFF; border-radius: 20px; padding: 28px 24px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid transparent;
   }
-  .equip-card.empty { border-color:#FCA5A5; }
-  .equip-card:hover { transform:translateY(-8px) scale(1.02); }
-  .bg-accent { position:absolute; top:0; right:0; width:120px; height:120px; opacity:.08; border-radius:0 20px 0 100%; }
-  .card-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; }
-  .icon-box { width:56px; height:56px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:28px; }
-  .badge { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:.5px; }
-  .badge-ok { background:#D1FAE5; color:#059669; }
-  .badge-low { background:#FEF3C7; color:#D97706; }
-  .badge-out { background:#FEE2E2; color:#DC2626; }
-  .equip-card h3 { font-size:17px; font-weight:800; color:#1E293B; margin-bottom:4px; }
-  .name-en { font-size:12px; color:#94A3B8; font-weight:500; letter-spacing:.5px; text-transform:uppercase; margin-bottom:20px; }
-  .qty-row { display:flex; align-items:baseline; gap:6px; }
-  .qty-num { font-size:42px; font-weight:900; font-family:'Kanit',sans-serif; line-height:1; }
-  .qty-unit { font-size:15px; color:#94A3B8; font-weight:600; }
-  .bar-bg { margin-top:16px; height:6px; border-radius:3px; background:#F1F5F9; overflow:hidden; }
-  .bar-fill { height:100%; border-radius:3px; transition:width 1s cubic-bezier(.34,1.56,.64,1); }
+  .equip-card.empty { border-color: #FCA5A5; }
+  .equip-card:hover { transform: translateY(-8px) scale(1.02); }
+  .bg-accent { position: absolute; top: 0; right: 0; width: 120px; height: 120px; opacity: 0.08; border-radius: 0 20px 0 100%; }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+  .icon-box { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+  .badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .badge-ok { background: #D1FAE5; color: #059669; }
+  .badge-low { background: #FEF3C7; color: #D97706; }
+  .badge-out { background: #FEE2E2; color: #DC2626; }
+  .equip-card h3 { font-size: 17px; font-weight: 800; color: #1E293B; margin-bottom: 4px; }
+  .name-en { font-size: 12px; color: #94A3B8; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 20px; }
+  .qty-row { display: flex; align-items: baseline; gap: 6px; }
+  .qty-num { font-size: 42px; font-weight: 900; font-family: 'Kanit', sans-serif; line-height: 1; }
+  .qty-unit { font-size: 15px; color: #94A3B8; font-weight: 600; }
+  .bar-bg { margin-top: 16px; height: 6px; border-radius: 3px; background: #F1F5F9; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
-  .footer { text-align:center; padding:20px; color:#CBD5E1; font-size:12px; }
+  .footer { text-align: center; padding: 20px; color: #CBD5E1; font-size: 12px; }
 
-  /* Modals */
+  /* ============ MODAL OVERLAY ============ */
   .overlay {
-    position:fixed; inset:0; background:rgba(15,23,42,.6); backdrop-filter:blur(12px);
-    display:none; align-items:center; justify-content:center; z-index:1000;
+    position: fixed; inset: 0; background: rgba(15,23,42,0.6); backdrop-filter: blur(12px);
+    display: none; align-items: center; justify-content: center; z-index: 1000;
   }
-  .overlay.active { display:flex; animation:fadeIn .3s ease; }
+  .overlay.active { display: flex; animation: fadeIn 0.3s ease; }
   .modal {
-    background:#FFF; border-radius:24px; padding:40px;
-    box-shadow:0 40px 80px rgba(0,0,0,.2);
-    animation:slideUp .4s cubic-bezier(.22,1,.36,1);
+    background: #FFF; border-radius: 24px; padding: 40px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+    animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .modal.shake { animation:shake .5s ease; }
+  .modal.shake { animation: shake 0.5s ease; }
 
-  /* Pin */
-  .pin-modal { width:360px; text-align:center; }
-  .pin-modal .ic { font-size:48px; margin-bottom:12px; }
-  .pin-modal h2 { font-size:20px; font-weight:800; color:#1E293B; font-family:'Kanit',sans-serif; }
-  .pin-modal .sub { margin:8px 0 24px; font-size:13px; color:#94A3B8; }
+  /* ============ PIN MODAL ============ */
+  .pin-modal { width: 360px; text-align: center; }
+  .pin-modal .ic { font-size: 48px; margin-bottom: 12px; }
+  .pin-modal h2 { font-size: 20px; font-weight: 800; color: #1E293B; font-family: 'Kanit', sans-serif; }
+  .pin-modal .sub { margin: 8px 0 24px; font-size: 13px; color: #94A3B8; }
   .pin-input {
-    width:100%; text-align:center; border:2px solid #E2E8F0;
-    border-radius:14px; padding:16px; font-size:28px; font-weight:800;
-    color:#1E293B; outline:none; letter-spacing:12px;
-    font-family:'Kanit',sans-serif; background:#F8FAFC;
+    width: 100%; text-align: center; border: 2px solid #E2E8F0;
+    border-radius: 14px; padding: 16px; font-size: 28px; font-weight: 800;
+    color: #1E293B; outline: none; letter-spacing: 12px;
+    font-family: 'Kanit', sans-serif; background: #F8FAFC;
+    transition: border-color 0.2s;
   }
-  .pin-input:focus { border-color:#A78BFA; }
-  .pin-input.error { border-color:#FCA5A5; background:#FEF2F2; }
-  .pin-err { color:#DC2626; font-size:13px; margin-top:10px; font-weight:600; display:none; }
-  .pin-err.show { display:block; }
+  .pin-input:focus { border-color: #A78BFA; }
+  .pin-input.error { border-color: #FCA5A5; background: #FEF2F2; }
+  .pin-input:disabled { opacity: 0.4; }
+  .msg-err { color: #DC2626; font-size: 13px; margin-top: 10px; font-weight: 600; display: none; }
+  .msg-lock { color: #D97706; font-size: 13px; margin-top: 10px; font-weight: 600; display: none; }
+  .msg-err.show, .msg-lock.show { display: block; }
   .btn-pin {
-    margin-top:20px; width:100%; padding:14px; border-radius:14px; border:none;
-    background:linear-gradient(135deg,#A78BFA 0%,#7C3AED 100%);
-    color:#FFF; font-size:15px; font-weight:700; cursor:pointer;
-    box-shadow:0 8px 24px #A78BFA40; font-family:'Kanit',sans-serif;
+    margin-top: 20px; width: 100%; padding: 14px; border-radius: 14px; border: none;
+    background: linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%);
+    color: #FFF; font-size: 15px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 8px 24px #A78BFA40; font-family: 'Kanit', sans-serif;
+    transition: all 0.3s;
   }
-  .btn-pin:hover { transform:translateY(-2px); }
-  .pin-hint { margin-top:16px; font-size:12px; color:#CBD5E1; }
+  .btn-pin:hover { transform: translateY(-2px); }
+  .btn-pin:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .pin-hint { margin-top: 16px; font-size: 12px; color: #CBD5E1; }
 
-  /* Admin */
-  .admin-modal { max-width:560px; width:92%; max-height:85vh; overflow-y:auto; padding:36px; }
-  .admin-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
-  .admin-head h2 { font-size:22px; font-weight:800; color:#1E293B; font-family:'Kanit',sans-serif; }
-  .admin-head .sub { margin-top:4px; font-size:13px; color:#94A3B8; }
+  /* ============ ADMIN MODAL ============ */
+  .admin-modal { max-width: 560px; width: 92%; max-height: 85vh; overflow-y: auto; padding: 36px; }
+  .admin-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .admin-head h2 { font-size: 22px; font-weight: 800; color: #1E293B; font-family: 'Kanit', sans-serif; }
+  .admin-head .sub { margin-top: 4px; font-size: 13px; color: #94A3B8; }
   .btn-close {
-    width:40px; height:40px; border-radius:12px; border:none;
-    background:#F1F5F9; cursor:pointer; font-size:18px; color:#64748B;
-    display:flex; align-items:center; justify-content:center;
+    width: 40px; height: 40px; border-radius: 12px; border: none;
+    background: #F1F5F9; cursor: pointer; font-size: 18px; color: #64748B;
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
   }
-  .btn-close:hover { background:#FEE2E2; color:#DC2626; }
+  .btn-close:hover { background: #FEE2E2; color: #DC2626; }
 
   .edit-row {
-    display:flex; align-items:center; gap:14px;
-    padding:14px 18px; border-radius:14px; background:#F8FAFC;
-    border:1px solid #E2E8F0; margin-bottom:12px;
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; border-radius: 14px; background: #F8FAFC;
+    border: 1px solid #E2E8F0; margin-bottom: 12px;
   }
-  .edit-icon { font-size:26px; width:36px; text-align:center; }
-  .edit-info { flex:1; }
-  .edit-name { font-weight:700; font-size:14px; color:#334155; }
-  .edit-sub { font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:.5px; }
-  .edit-ctrl { display:flex; align-items:center; gap:8px; }
-  .btn-m,.btn-p {
-    width:34px; height:34px; border-radius:10px; border:none;
-    font-size:18px; font-weight:700; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; transition:all .2s;
+  .edit-icon { font-size: 26px; width: 36px; text-align: center; }
+  .edit-info { flex: 1; }
+  .edit-name { font-weight: 700; font-size: 14px; color: #334155; }
+  .edit-sub { font-size: 11px; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .edit-ctrl { display: flex; align-items: center; gap: 8px; }
+  .btn-m, .btn-p {
+    width: 34px; height: 34px; border-radius: 10px; border: none;
+    font-size: 18px; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
   }
-  .btn-m { background:#FEE2E2; color:#DC2626; }
-  .btn-p { background:#D1FAE5; color:#059669; }
-  .btn-m:hover,.btn-p:hover { transform:scale(1.1); }
+  .btn-m { background: #FEE2E2; color: #DC2626; }
+  .btn-p { background: #D1FAE5; color: #059669; }
+  .btn-m:hover, .btn-p:hover { transform: scale(1.1); }
   .q-input {
-    width:60px; text-align:center; border:2px solid #E2E8F0;
-    border-radius:10px; padding:8px 4px; font-size:18px; font-weight:800;
-    color:#1E293B; outline:none; font-family:'Kanit',sans-serif;
+    width: 60px; text-align: center; border: 2px solid #E2E8F0;
+    border-radius: 10px; padding: 8px 4px; font-size: 18px; font-weight: 800;
+    color: #1E293B; outline: none; font-family: 'Kanit', sans-serif;
+    transition: border-color 0.2s;
   }
-  .q-input:focus { border-color:#7C3AED; }
+  .q-input:focus { border-color: #7C3AED; }
   input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; }
-  input[type=number] { -moz-appearance:textfield; }
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  input[type=number] { -moz-appearance: textfield; }
 
   .btn-save {
-    margin-top:24px; width:100%; padding:16px; border-radius:14px; border:none;
-    background:linear-gradient(135deg,#4ECDC4 0%,#44B09E 100%);
-    color:#FFF; font-size:16px; font-weight:800; cursor:pointer;
-    box-shadow:0 8px 24px #4ECDC440; font-family:'Kanit',sans-serif;
+    margin-top: 24px; width: 100%; padding: 16px; border-radius: 14px; border: none;
+    background: linear-gradient(135deg, #4ECDC4 0%, #44B09E 100%);
+    color: #FFF; font-size: 16px; font-weight: 800; cursor: pointer;
+    box-shadow: 0 8px 24px #4ECDC440; font-family: 'Kanit', sans-serif;
+    transition: all 0.3s;
   }
-  .btn-save:hover { transform:translateY(-2px); }
-  .btn-save:disabled { opacity:.6; cursor:wait; }
+  .btn-save:hover { transform: translateY(-2px); }
+  .btn-save:disabled { opacity: 0.6; cursor: wait; }
 
+  /* ============ TOAST ============ */
   .toast {
-    position:fixed; top:24px; left:50%; transform:translateX(-50%);
-    padding:14px 32px; border-radius:16px; font-weight:700; font-size:15px;
-    z-index:2000; font-family:'Kanit',sans-serif; display:none;
-    animation:flashIn 2.5s ease forwards;
+    position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+    padding: 14px 32px; border-radius: 16px; font-weight: 700; font-size: 15px;
+    z-index: 2000; font-family: 'Kanit', sans-serif;
+    display: none; animation: flashIn 2.5s ease forwards;
   }
-  .toast.ok { background:linear-gradient(135deg,#059669,#10B981); color:#FFF; box-shadow:0 12px 32px #05966940; }
-  .toast.err { background:linear-gradient(135deg,#DC2626,#EF4444); color:#FFF; box-shadow:0 12px 32px #DC262640; }
-  .toast.show { display:block; }
+  .toast.ok { background: linear-gradient(135deg, #059669, #10B981); color: #FFF; box-shadow: 0 12px 32px #05966940; }
+  .toast.err { background: linear-gradient(135deg, #DC2626, #EF4444); color: #FFF; box-shadow: 0 12px 32px #DC262640; }
+  .toast.show { display: block; }
 
-  .loader { min-height:100vh; display:flex; align-items:center; justify-content:center; position:relative; z-index:1; text-align:center; }
-  .loader-icon { font-size:48px; animation:pulse 1.5s infinite; }
-  .loader-text { color:#64748B; font-family:'Kanit',sans-serif; margin-top:12px; }
+  /* ============ LOADING ============ */
+  .loader {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1; text-align: center;
+  }
+  .loader-icon { font-size: 48px; animation: pulse 1.5s infinite; }
+  .loader-text { color: #64748B; font-family: 'Kanit', sans-serif; margin-top: 12px; }
 
-  @keyframes cardIn { from{opacity:0;transform:translateY(30px) scale(.95)} to{opacity:1;transform:translateY(0) scale(1)} }
-  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-  @keyframes slideUp { from{opacity:0;transform:translateY(40px) scale(.96)} to{opacity:1;transform:translateY(0) scale(1)} }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-  @keyframes gradientMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-  @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-12px)} 40%{transform:translateX(12px)} 60%{transform:translateX(-8px)} 80%{transform:translateX(8px)} }
-  @keyframes flashIn { 0%{opacity:0;transform:translateX(-50%) translateY(-10px)} 20%{opacity:1;transform:translateX(-50%) translateY(0)} 80%{opacity:1} 100%{opacity:0;transform:translateX(-50%) translateY(-10px)} }
-  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
-  @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+  /* ============ ANIMATIONS ============ */
+  @keyframes cardIn { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(40px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-12px); } 40% { transform: translateX(12px); } 60% { transform: translateX(-8px); } 80% { transform: translateX(8px); } }
+  @keyframes flashIn { 0% { opacity: 0; transform: translateX(-50%) translateY(-10px); } 20% { opacity: 1; transform: translateX(-50%) translateY(0); } 80% { opacity: 1; } 100% { opacity: 0; transform: translateX(-50%) translateY(-10px); } }
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  .hidden { display:none!important; }
+  .hidden { display: none !important; }
 
-  @media(max-width:600px) {
-    .header{flex-direction:column;align-items:flex-start}
-    .header-sub{padding-left:0}
-    .stats-row{grid-template-columns:repeat(2,1fr)}
-    .equip-grid{grid-template-columns:1fr}
-    .admin-modal{padding:24px}
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 600px) {
+    .header { flex-direction: column; align-items: flex-start; }
+    .header-sub { padding-left: 0; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .equip-grid { grid-template-columns: 1fr; }
+    .admin-modal { padding: 24px; }
   }
 </style>
 </head>
 <body>
 
+<!-- Toast notification -->
 <div class="toast" id="toast"></div>
 
-<!-- Loading -->
+<!-- Loading screen -->
 <div class="loader" id="loader">
   <div>
     <div class="loader-icon">📦</div>
@@ -242,26 +265,26 @@
   </div>
 </div>
 
-<!-- Dashboard -->
+<!-- ==================== MAIN APP ==================== -->
 <div id="app" class="hidden">
 
   <!-- PIN Modal -->
-  <div class="overlay" id="pinModal">
+  <div class="overlay" id="pinOverlay">
     <div class="modal pin-modal" id="pinBox" onclick="event.stopPropagation()">
       <div class="ic">🔐</div>
       <h2>เข้าสู่ระบบผู้ดูแล</h2>
-      <p class="sub">กรุณาใส่รหัส PIN</p>
+      <p class="sub">กรุณาใส่รหัส PIN 5 หลัก</p>
       <input type="password" class="pin-input" id="pinInput" maxlength="5" placeholder="● ● ● ● ●"
-             oninput="this.value=this.value.replace(/\D/g,''); if(this.value.length===5)checkPin()"
-      <p class="pin-err" id="pinErr">รหัสไม่ถูกต้อง ลองใหม่อีกครั้ง</p>
-      <p class="pin-err" id="pinLock" style="color:#D97706"></p>
+             oninput="onPinInput(this)" onkeydown="if(event.key==='Enter')checkPin()">
+      <p class="msg-err" id="msgErr"></p>
+      <p class="msg-lock" id="msgLock"></p>
       <button class="btn-pin" id="btnPin" onclick="checkPin()">เข้าสู่ระบบ</button>
-      <p class="pin-hint">รหัสผ่าน : รหัสเครื่องปริ้น คุณปิ๊ก ชัณษา</p>
+      <p class="pin-hint">รหัสคือเครื่องปริ้น Chansa</p>
     </div>
   </div>
 
   <!-- Admin Modal -->
-  <div class="overlay" id="adminModal">
+  <div class="overlay" id="adminOverlay">
     <div class="modal admin-modal" onclick="event.stopPropagation()">
       <div class="admin-head">
         <div>
@@ -275,8 +298,9 @@
     </div>
   </div>
 
+  <!-- Dashboard -->
   <div class="container">
-    <!-- Header -->
+
     <div class="header">
       <div>
         <div class="header-left">
@@ -286,10 +310,7 @@
         <p class="header-sub">Equipment Inventory Dashboard</p>
       </div>
       <div class="header-right">
-        <div class="conn-badge online">
-          <span class="dot"></span>
-          <span>☁️ Cloudinary</span>
-        </div>
+        <div class="cloud-badge"><span class="dot"></span> ☁️ Cloudinary</div>
         <button class="btn-refresh" onclick="refreshData()">
           <span id="refIcon" style="display:inline-block">🔄</span> รีเฟรช
         </button>
@@ -297,56 +318,60 @@
       </div>
     </div>
 
-    <!-- Stats -->
     <div class="stats-row" id="statsRow"></div>
 
-    <!-- Last Update -->
     <div class="update-banner">
       <span style="font-size:16px">🕐</span>
       <span class="lbl">อัปเดตล่าสุด:</span>
-      <span class="time" id="lastUpdate">ยังไม่มีการอัปเดต</span>
+      <span class="time" id="lastUpdateText">ยังไม่มีการอัปเดต</span>
     </div>
 
-    <!-- Grid -->
     <div class="equip-grid" id="grid"></div>
 
     <div class="footer">☁️ Equipment Inventory — Powered by Cloudinary</div>
   </div>
 </div>
 
+<!-- ==================== JAVASCRIPT ==================== -->
 <script>
-// ╔══════════════════════════════════════════════════════════════╗
-// ║  ✏️ แก้ไขตรงนี้ก่อน Deploy !!                                ║
-// ║                                                              ║
-// ║  1. CLOUD_NAME  = Cloud Name จาก Cloudinary Dashboard        ║
-// ║  2. UPLOAD_PRESET = ชื่อ Upload Preset (ต้องเป็น Unsigned)    ║
-// ║  3. ADMIN_PIN   = รหัส PIN 5 หลักสำหรับผู้ดูแล (ล็อค 3 นาทีถ้าใส่ผิด) ║
-// ╚══════════════════════════════════════════════════════════════╝
+
+// ╔════════════════════════════════════════════════════════════════════╗
+// ║  ✏️  แก้ไข 3 ค่านี้ก่อน Deploy !!                                  ║
+// ║                                                                    ║
+// ║  CLOUD_NAME    = Cloud Name จาก Cloudinary Dashboard               ║
+// ║  UPLOAD_PRESET = ชื่อ Upload Preset (ต้องเป็น Unsigned)              ║
+// ║  ADMIN_PIN     = รหัส PIN 5 หลักสำหรับผู้ดูแล                       ║
+// ║                  (ผิด 3 ครั้ง → ล็อค 3 นาที)                        ║
+// ╚════════════════════════════════════════════════════════════════════╝
 
 const CLOUD_NAME    = "dpyhc69jg";
 const UPLOAD_PRESET = "equipment cmul";
 const ADMIN_PIN     = "47102";
 
-// ═══════════════════════════════════════════════════════════════
-// ด้านล่างนี้ไม่ต้องแก้ไข
-// ═══════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════════
+//  ด้านล่างนี้ไม่ต้องแก้ไข
+// ══════════════════════════════════════════════════════════════════════
 
 const FILE_ID = "equipment_inventory_data";
 
 const ITEMS = [
-  { id:"power_strip", name:"ปลั๊กไฟ", nameEn:"Power Strip", icon:"🔌", qty:10, color:"#FF6B35", bg:"linear-gradient(135deg,#FF6B35,#F7C948)" },
-  { id:"usbc", name:"สาย USB-C", nameEn:"USB-C Cable", icon:"🔗", qty:15, color:"#4ECDC4", bg:"linear-gradient(135deg,#4ECDC4,#44B09E)" },
-  { id:"lightning", name:"สาย Lightning", nameEn:"Lightning Cable", icon:"⚡", qty:12, color:"#A78BFA", bg:"linear-gradient(135deg,#A78BFA,#7C3AED)" },
-  { id:"headphone", name:"หูฟัง", nameEn:"Headphones", icon:"🎧", qty:8, color:"#F472B6", bg:"linear-gradient(135deg,#F472B6,#EC4899)" },
-  { id:"calculator", name:"เครื่องคิดเลขวิทยาศาสตร์", nameEn:"Scientific Calculator", icon:"🧮", qty:5, color:"#60A5FA", bg:"linear-gradient(135deg,#60A5FA,#3B82F6)" },
-  { id:"lamp", name:"โคมไฟ", nameEn:"Desk Lamp", icon:"💡", qty:6, color:"#FBBF24", bg:"linear-gradient(135deg,#FBBF24,#F59E0B)" },
-  { id:"adaptor_hub", name:"Adaptor Hub", nameEn:"Adaptor Hub", icon:"🔄", qty:7, color:"#34D399", bg:"linear-gradient(135deg,#34D399,#10B981)" },
+  { id: "power_strip",  name: "ปลั๊กไฟ",                 nameEn: "Power Strip",          icon: "🔌", qty: 10, color: "#FF6B35", bg: "linear-gradient(135deg, #FF6B35, #F7C948)" },
+  { id: "usbc",         name: "สาย USB-C",               nameEn: "USB-C Cable",          icon: "🔗", qty: 15, color: "#4ECDC4", bg: "linear-gradient(135deg, #4ECDC4, #44B09E)" },
+  { id: "lightning",    name: "สาย Lightning",            nameEn: "Lightning Cable",      icon: "⚡", qty: 12, color: "#A78BFA", bg: "linear-gradient(135deg, #A78BFA, #7C3AED)" },
+  { id: "headphone",    name: "หูฟัง",                    nameEn: "Headphones",           icon: "🎧", qty: 8,  color: "#F472B6", bg: "linear-gradient(135deg, #F472B6, #EC4899)" },
+  { id: "calculator",   name: "เครื่องคิดเลขวิทยาศาสตร์", nameEn: "Scientific Calculator", icon: "🧮", qty: 5,  color: "#60A5FA", bg: "linear-gradient(135deg, #60A5FA, #3B82F6)" },
+  { id: "lamp",         name: "โคมไฟ",                    nameEn: "Desk Lamp",            icon: "💡", qty: 6,  color: "#FBBF24", bg: "linear-gradient(135deg, #FBBF24, #F59E0B)" },
+  { id: "adaptor_hub",  name: "Adaptor Hub",              nameEn: "Adaptor Hub",          icon: "🔄", qty: 7,  color: "#34D399", bg: "linear-gradient(135deg, #34D399, #10B981)" },
 ];
 
 let equipment = [];
 let lastUpdate = null;
 
-// ===== CLOUDINARY =====
+
+// ════════════════════════════════════════
+//  CLOUDINARY — อ่าน/เขียนข้อมูล
+// ════════════════════════════════════════
+
 async function loadFromCloud() {
   const url = `https://res.cloudinary.com/${CLOUD_NAME}/raw/upload/${FILE_ID}.json?t=${Date.now()}`;
   try {
@@ -354,27 +379,26 @@ async function loadFromCloud() {
     if (res.ok) {
       const data = await res.json();
       equipment = ITEMS.map(def => {
-        const s = (data.items||[]).find(i => i.id === def.id);
-        return s ? { ...def, qty: s.qty } : { ...def };
+        const saved = (data.items || []).find(i => i.id === def.id);
+        return saved ? { ...def, qty: saved.qty } : { ...def };
       });
       lastUpdate = data.lastUpdate || null;
     } else {
-      // ยังไม่มีข้อมูลบน Cloud — ใช้ค่าเริ่มต้น
-      equipment = ITEMS.map(d => ({...d}));
+      equipment = ITEMS.map(d => ({ ...d }));
     }
-  } catch(e) {
-    console.warn("Cloud fetch failed, using defaults:", e);
-    equipment = ITEMS.map(d => ({...d}));
+  } catch (e) {
+    console.warn("Cloud fetch failed:", e);
+    equipment = ITEMS.map(d => ({ ...d }));
   }
 }
 
 async function saveToCloud() {
   const payload = JSON.stringify({
-    items: equipment.map(e => ({ id:e.id, qty:e.qty })),
+    items: equipment.map(e => ({ id: e.id, qty: e.qty })),
     lastUpdate: lastUpdate,
   });
 
-  const blob = new Blob([payload], { type:"application/json" });
+  const blob = new Blob([payload], { type: "application/json" });
   const fd = new FormData();
   fd.append("file", blob, FILE_ID + ".json");
   fd.append("upload_preset", UPLOAD_PRESET);
@@ -384,88 +408,111 @@ async function saveToCloud() {
   fd.append("invalidate", "true");
 
   const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`, {
-    method: "POST", body: fd
+    method: "POST",
+    body: fd,
   });
 
   if (!res.ok) throw new Error("Upload failed: " + res.status);
 }
 
-// ===== RENDER =====
+
+// ════════════════════════════════════════
+//  RENDER — วาดหน้า Dashboard
+// ════════════════════════════════════════
+
 function render() {
-  // Stats
-  const total = equipment.reduce((s,e) => s+e.qty, 0);
-  const low = equipment.filter(e => e.qty>0 && e.qty<=3).length;
-  const out = equipment.filter(e => e.qty===0).length;
+  // Stats summary
+  const total = equipment.reduce((s, e) => s + e.qty, 0);
+  const low   = equipment.filter(e => e.qty > 0 && e.qty <= 3).length;
+  const out   = equipment.filter(e => e.qty === 0).length;
+
   const stats = [
-    { label:"อุปกรณ์ทั้งหมด", val:total, unit:"ชิ้น", color:"#4ECDC4", bgc:"#F0FDFA", icon:"📊" },
-    { label:"ประเภทอุปกรณ์", val:equipment.length, unit:"ประเภท", color:"#7C3AED", bgc:"#F5F3FF", icon:"📋" },
-    { label:"เหลือน้อย", val:low, unit:"รายการ", color:"#F59E0B", bgc:"#FFFBEB", icon:"⚠️" },
-    { label:"หมดแล้ว", val:out, unit:"รายการ", color:"#DC2626", bgc:"#FEF2F2", icon:"🚫" },
+    { label: "อุปกรณ์ทั้งหมด",   val: total,            unit: "ชิ้น",    color: "#4ECDC4", bgc: "#F0FDFA", icon: "📊" },
+    { label: "ประเภทอุปกรณ์",   val: equipment.length,  unit: "ประเภท",  color: "#7C3AED", bgc: "#F5F3FF", icon: "📋" },
+    { label: "เหลือน้อย",       val: low,               unit: "รายการ",  color: "#F59E0B", bgc: "#FFFBEB", icon: "⚠️" },
+    { label: "หมดแล้ว",         val: out,               unit: "รายการ",  color: "#DC2626", bgc: "#FEF2F2", icon: "🚫" },
   ];
-  document.getElementById("statsRow").innerHTML = stats.map((s,i) =>
-    `<div class="stat-card" style="background:${s.bgc};border:1px solid ${s.color}20;animation-delay:${i*.1}s">
+
+  document.getElementById("statsRow").innerHTML = stats.map((s, i) =>
+    `<div class="stat-card" style="background:${s.bgc};border:1px solid ${s.color}20;animation-delay:${i * 0.1}s">
       <div class="stat-label"><span style="font-size:16px">${s.icon}</span><span>${s.label}</span></div>
       <div class="stat-value"><span class="stat-num" style="color:${s.color}">${s.val}</span><span class="stat-unit">${s.unit}</span></div>
     </div>`
   ).join("");
 
-  // Grid
-  document.getElementById("grid").innerHTML = equipment.map((it,i) => {
-    const empty = it.qty===0, low = it.qty>0 && it.qty<=3;
-    const bc = empty?"badge-out":low?"badge-low":"badge-ok";
-    const bt = empty?"หมด":low?"เหลือน้อย":"พร้อมใช้";
-    const barC = empty?"#DC2626":low?"#F59E0B":it.bg;
-    const bw = Math.min((it.qty/20)*100,100);
-    return `<div class="equip-card ${empty?'empty':''}" style="animation:cardIn .6s cubic-bezier(.22,1,.36,1) ${i*.08}s both"
-        onmouseenter="this.style.boxShadow='0 20px 40px ${it.color}30,0 8px 16px rgba(0,0,0,.08)'"
-        onmouseleave="this.style.boxShadow=''">
+  // Equipment cards
+  document.getElementById("grid").innerHTML = equipment.map((it, i) => {
+    const isEmpty = it.qty === 0;
+    const isLow   = it.qty > 0 && it.qty <= 3;
+    const bc = isEmpty ? "badge-out" : isLow ? "badge-low" : "badge-ok";
+    const bt = isEmpty ? "หมด" : isLow ? "เหลือน้อย" : "พร้อมใช้";
+    const barC = isEmpty ? "#DC2626" : isLow ? "#F59E0B" : it.bg;
+    const bw = Math.min((it.qty / 20) * 100, 100);
+
+    return `<div class="equip-card ${isEmpty ? 'empty' : ''}"
+                style="animation:cardIn .6s cubic-bezier(.22,1,.36,1) ${i * 0.08}s both"
+                onmouseenter="this.style.boxShadow='0 20px 40px ${it.color}30, 0 8px 16px rgba(0,0,0,.08)'"
+                onmouseleave="this.style.boxShadow=''">
       <div class="bg-accent" style="background:${it.bg}"></div>
       <div class="card-top">
         <div class="icon-box" style="background:${it.bg};box-shadow:0 8px 20px ${it.color}40">${it.icon}</div>
         <span class="badge ${bc}">${bt}</span>
       </div>
-      <h3>${it.name}</h3><p class="name-en">${it.nameEn}</p>
+      <h3>${it.name}</h3>
+      <p class="name-en">${it.nameEn}</p>
       <div class="qty-row">
-        <span class="qty-num" style="color:${empty?'#DC2626':it.color}">${it.qty}</span>
+        <span class="qty-num" style="color:${isEmpty ? '#DC2626' : it.color}">${it.qty}</span>
         <span class="qty-unit">ชิ้น</span>
       </div>
       <div class="bar-bg"><div class="bar-fill" style="width:${bw}%;background:${barC}"></div></div>
     </div>`;
   }).join("");
 
-  document.getElementById("lastUpdate").textContent = lastUpdate || "ยังไม่มีการอัปเดต";
+  document.getElementById("lastUpdateText").textContent = lastUpdate || "ยังไม่มีการอัปเดต";
 }
 
-// ===== REFRESH =====
+
+// ════════════════════════════════════════
+//  REFRESH — รีเฟรชข้อมูลจาก Cloud
+// ════════════════════════════════════════
+
 async function refreshData() {
   const icon = document.getElementById("refIcon");
   icon.style.animation = "spin .8s linear";
   try {
     await loadFromCloud();
     render();
-    toast("✅ โหลดข้อมูลล่าสุดแล้ว","ok");
-  } catch(e) { toast("❌ โหลดไม่สำเร็จ","err"); }
-  setTimeout(() => icon.style.animation = "", 800);
+    toast("✅ โหลดข้อมูลล่าสุดแล้ว", "ok");
+  } catch (e) {
+    toast("❌ โหลดไม่สำเร็จ", "err");
+  }
+  setTimeout(() => (icon.style.animation = ""), 800);
 }
 
-// ===== PIN (ล็อค 3 นาทีเมื่อใส่ผิด) =====
-let lockUntil = 0;
-let lockTimer = null;
- let failCount = 0;
 
-function isLocked() { return Date.now() < lockUntil; }
+// ════════════════════════════════════════
+//  PIN — ระบบรหัสผ่าน + ล็อค 3 นาที
+// ════════════════════════════════════════
+
+let failCount = 0;       // จำนวนครั้งที่ใส่ผิด
+let lockUntil = 0;       // เวลาที่ปลดล็อค (timestamp)
+let lockTimer = null;    // interval สำหรับนับถอยหลัง
+
+function isLocked() {
+  return Date.now() < lockUntil;
+}
+
+function setInputEnabled(enabled) {
+  const inp = document.getElementById("pinInput");
+  const btn = document.getElementById("btnPin");
+  inp.disabled = !enabled;
+  btn.disabled = !enabled;
+}
 
 function startLockCountdown() {
-  const lockEl = document.getElementById("pinLock");
-  const btnEl = document.getElementById("btnPin");
-  const inpEl = document.getElementById("pinInput");
-
+  const lockEl = document.getElementById("msgLock");
+  setInputEnabled(false);
   lockEl.classList.add("show");
-  btnEl.disabled = true;
-  btnEl.style.opacity = ".4";
-  btnEl.style.cursor = "not-allowed";
-  inpEl.disabled = true;
-  inpEl.style.opacity = ".4";
 
   clearInterval(lockTimer);
   lockTimer = setInterval(() => {
@@ -473,69 +520,104 @@ function startLockCountdown() {
     if (remain <= 0) {
       clearInterval(lockTimer);
       lockEl.classList.remove("show");
-      btnEl.disabled = false;
-      btnEl.style.opacity = "1";
-      btnEl.style.cursor = "pointer";
-      inpEl.disabled = false;
-      inpEl.style.opacity = "1";
-      inpEl.value = "";
-      inpEl.focus();
+      setInputEnabled(true);
+      const inp = document.getElementById("pinInput");
+      inp.value = "";
+      inp.classList.remove("error");
+      document.getElementById("msgErr").classList.remove("show");
+      inp.focus();
       return;
     }
-    const min = Math.floor(remain/60000);
-    const sec = Math.floor((remain%60000)/1000);
-    lockEl.textContent = `⏳ กรุณารอ ${min}:${sec.toString().padStart(2,"0")} นาที แล้วลองใหม่`;
+    const min = Math.floor(remain / 60000);
+    const sec = Math.floor((remain % 60000) / 1000);
+    lockEl.textContent = `⏳ ใส่รหัสผิดเกินกำหนด กรุณารอ ${min}:${sec.toString().padStart(2, "0")} นาที`;
   }, 200);
 }
 
+// เปิด PIN modal
 function openPin() {
-  document.getElementById("pinModal").classList.add("active");
+  document.getElementById("pinOverlay").classList.add("active");
   const inp = document.getElementById("pinInput");
-  inp.value=""; inp.classList.remove("error");
-  document.getElementById("pinErr").classList.remove("show");
+  inp.value = "";
+  inp.classList.remove("error");
+  document.getElementById("msgErr").classList.remove("show");
 
   if (isLocked()) {
     startLockCountdown();
   } else {
-    document.getElementById("pinLock").classList.remove("show");
-    document.getElementById("btnPin").disabled = false;
-    document.getElementById("btnPin").style.opacity = "1";
-    document.getElementById("btnPin").style.cursor = "pointer";
-    inp.disabled = false;
-    inp.style.opacity = "1";
+    document.getElementById("msgLock").classList.remove("show");
+    setInputEnabled(true);
     setTimeout(() => inp.focus(), 100);
   }
 }
-function closePin() { document.getElementById("pinModal").classList.remove("active"); }
+
+// ปิด PIN modal
+function closePin() {
+  document.getElementById("pinOverlay").classList.remove("active");
+}
+
+// เมื่อพิมพ์ใน PIN input — ลบตัวอักษรที่ไม่ใช่ตัวเลข + auto submit เมื่อครบ 5 ตัว
+function onPinInput(el) {
+  el.value = el.value.replace(/\D/g, "");
+  if (el.value.length === 5) {
+    checkPin();
+  }
+}
+
+// เช็ครหัส PIN
 function checkPin() {
   if (isLocked()) return;
+
   const inp = document.getElementById("pinInput");
-  if (inp.value===ADMIN_PIN) {
+  const errEl = document.getElementById("msgErr");
+
+  if (inp.value === ADMIN_PIN) {
+    // รหัสถูก → รีเซ็ตทุกอย่าง แล้วเปิดหน้า Admin
+    failCount = 0;
     lockUntil = 0;
     closePin();
     openAdmin();
   } else {
+    // รหัสผิด
+    failCount++;
+    const remaining = 3 - failCount;
+
     inp.classList.add("error");
-    document.getElementById("pinErr").classList.add("show");
+    errEl.classList.add("show");
+
+    if (remaining > 0) {
+      errEl.textContent = `❌ รหัสไม่ถูกต้อง (เหลือโอกาสอีก ${remaining} ครั้ง)`;
+    } else {
+      errEl.textContent = "❌ ใส่รหัสผิดครบ 3 ครั้ง";
+    }
+
+    // สั่นกล่อง
     document.getElementById("pinBox").classList.add("shake");
     setTimeout(() => document.getElementById("pinBox").classList.remove("shake"), 500);
-    inp.value="";
+    inp.value = "";
 
-    // นับจำนวนครั้งที่ผิด — ผิดครบ 3 ครั้งค่อยล็อค
-    failCount++;
+    // ผิดครบ 3 ครั้ง → ล็อค 3 นาที
     if (failCount >= 3) {
       lockUntil = Date.now() + 3 * 60 * 1000;
       failCount = 0;
       startLockCountdown();
     }
+  }
 }
 
-// ===== ADMIN =====
+
+// ════════════════════════════════════════
+//  ADMIN — หน้าแก้ไขจำนวนอุปกรณ์
+// ════════════════════════════════════════
+
 function openAdmin() {
-  document.getElementById("editList").innerHTML = equipment.map((it,i) =>
+  document.getElementById("editList").innerHTML = equipment.map((it, i) =>
     `<div class="edit-row">
       <span class="edit-icon">${it.icon}</span>
-      <div class="edit-info"><div class="edit-name">${it.name}</div><div class="edit-sub">${it.nameEn}</div></div>
+      <div class="edit-info">
+        <div class="edit-name">${it.name}</div>
+        <div class="edit-sub">${it.nameEn}</div>
+      </div>
       <div class="edit-ctrl">
         <button class="btn-m" onclick="adj(${i},-1)">−</button>
         <input type="number" class="q-input" id="q${i}" min="0" value="${it.qty}">
@@ -543,47 +625,77 @@ function openAdmin() {
       </div>
     </div>`
   ).join("");
-  document.getElementById("adminModal").classList.add("active");
+  document.getElementById("adminOverlay").classList.add("active");
 }
-function closeAdmin() { document.getElementById("adminModal").classList.remove("active"); }
-function adj(i,d) { const el=document.getElementById("q"+i); el.value=Math.max(0,(parseInt(el.value)||0)+d); }
+
+function closeAdmin() {
+  document.getElementById("adminOverlay").classList.remove("active");
+}
+
+function adj(i, d) {
+  const el = document.getElementById("q" + i);
+  el.value = Math.max(0, (parseInt(el.value) || 0) + d);
+}
 
 async function saveData() {
   const btn = document.getElementById("btnSave");
-  btn.disabled=true; btn.textContent="⏳ กำลังบันทึก...";
+  btn.disabled = true;
+  btn.textContent = "⏳ กำลังบันทึก...";
 
-  equipment.forEach((it,i) => {
-    it.qty = Math.max(0, parseInt(document.getElementById("q"+i).value)||0);
+  // อ่านค่าจาก input
+  equipment.forEach((it, i) => {
+    it.qty = Math.max(0, parseInt(document.getElementById("q" + i).value) || 0);
   });
+
+  // บันทึกเวลาที่อัปเดต
   lastUpdate = new Date().toLocaleString("th-TH", {
-    timeZone:"Asia/Bangkok", year:"numeric", month:"long", day:"numeric",
-    hour:"2-digit", minute:"2-digit", second:"2-digit",
+    timeZone: "Asia/Bangkok",
+    year: "numeric", month: "long", day: "numeric",
+    hour: "2-digit", minute: "2-digit", second: "2-digit",
   });
 
   try {
     await saveToCloud();
-    closeAdmin(); render();
-    toast("✅ บันทึกสำเร็จ!","ok");
-  } catch(e) {
+    closeAdmin();
+    render();
+    toast("✅ บันทึกสำเร็จ!", "ok");
+  } catch (e) {
     console.error(e);
-    toast("❌ บันทึกไม่สำเร็จ — ตรวจสอบ Cloudinary Config","err");
+    toast("❌ บันทึกไม่สำเร็จ — ตรวจสอบ Cloudinary Config", "err");
   }
-  btn.disabled=false; btn.textContent="💾 บันทึกข้อมูล";
+
+  btn.disabled = false;
+  btn.textContent = "💾 บันทึกข้อมูล";
 }
 
+
+// ════════════════════════════════════════
+//  TOAST — แจ้งเตือน
+// ════════════════════════════════════════
+
 function toast(msg, type) {
-  const t=document.getElementById("toast");
-  t.textContent=msg; t.className="toast "+type+" show";
-  t.style.animation="none"; t.offsetHeight;
-  t.style.animation="flashIn 2.5s ease forwards";
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast " + type + " show";
+  t.style.animation = "none";
+  t.offsetHeight; // force reflow
+  t.style.animation = "flashIn 2.5s ease forwards";
   setTimeout(() => t.classList.remove("show"), 2600);
 }
 
-// Close modals
-document.getElementById("pinModal").addEventListener("click", closePin);
-document.getElementById("adminModal").addEventListener("click", closeAdmin);
 
-// ===== INIT =====
+// ════════════════════════════════════════
+//  EVENTS — ปิด modal เมื่อกด overlay
+// ════════════════════════════════════════
+
+document.getElementById("pinOverlay").addEventListener("click", closePin);
+document.getElementById("adminOverlay").addEventListener("click", closeAdmin);
+
+
+// ════════════════════════════════════════
+//  INIT — เริ่มต้นแอป
+// ════════════════════════════════════════
+
 (async () => {
   await loadFromCloud();
   document.getElementById("loader").classList.add("hidden");
@@ -592,9 +704,10 @@ document.getElementById("adminModal").addEventListener("click", closeAdmin);
 
   // Auto-refresh ทุก 30 วินาที
   setInterval(async () => {
-    try { await loadFromCloud(); render(); } catch(e) {}
+    try { await loadFromCloud(); render(); } catch (e) {}
   }, 30000);
 })();
+
 </script>
 </body>
 </html>
