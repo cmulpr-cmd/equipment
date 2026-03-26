@@ -251,7 +251,7 @@
       <div class="ic">🔐</div>
       <h2>เข้าสู่ระบบผู้ดูแล</h2>
       <p class="sub">กรุณาใส่รหัส PIN</p>
-      <input type="password" class="pin-input" id="pinInput" maxlength="4" placeholder="● ● ● ●"
+      <input type="password" class="pin-input" id="pinInput" maxlength="5" placeholder="● ● ● ● ●"
              oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter')checkPin()">
       <p class="pin-err" id="pinErr">รหัสไม่ถูกต้อง ลองใหม่อีกครั้ง</p>
       <button class="btn-pin" onclick="checkPin()">เข้าสู่ระบบ</button>
