@@ -451,6 +451,7 @@ async function refreshData() {
 // ===== PIN (ล็อค 3 นาทีเมื่อใส่ผิด) =====
 let lockUntil = 0;
 let lockTimer = null;
+ let failCount = 0;
 
 function isLocked() { return Date.now() < lockUntil; }
 
@@ -520,10 +521,13 @@ function checkPin() {
     setTimeout(() => document.getElementById("pinBox").classList.remove("shake"), 500);
     inp.value="";
 
-    // ล็อค 3 นาที
-    lockUntil = Date.now() + 3 * 60 * 1000;
-    startLockCountdown();
-  }
+    // นับจำนวนครั้งที่ผิด — ผิดครบ 3 ครั้งค่อยล็อค
+    failCount++;
+    if (failCount >= 3) {
+      lockUntil = Date.now() + 3 * 60 * 1000;
+      failCount = 0;
+      startLockCountdown();
+    }
 }
 
 // ===== ADMIN =====
