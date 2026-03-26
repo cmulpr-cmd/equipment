@@ -254,8 +254,9 @@
       <input type="password" class="pin-input" id="pinInput" maxlength="5" placeholder="● ● ● ● ●"
              oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter')checkPin()">
       <p class="pin-err" id="pinErr">รหัสไม่ถูกต้อง ลองใหม่อีกครั้ง</p>
-      <button class="btn-pin" onclick="checkPin()">เข้าสู่ระบบ</button>
-      <p class="pin-hint">รหัสผ่าน : รหัสเครื่องปริ้น Chansa</p>
+      <p class="pin-err" id="pinLock" style="color:#D97706"></p>
+      <button class="btn-pin" id="btnPin" onclick="checkPin()">เข้าสู่ระบบ</button>
+      <p class="pin-hint">รหัสเริ่มต้น: 12345</p>
     </div>
   </div>
 
@@ -319,12 +320,12 @@
 // ║                                                              ║
 // ║  1. CLOUD_NAME  = Cloud Name จาก Cloudinary Dashboard        ║
 // ║  2. UPLOAD_PRESET = ชื่อ Upload Preset (ต้องเป็น Unsigned)    ║
-// ║  3. ADMIN_PIN   = รหัส PIN สำหรับผู้ดูแล                      ║
+// ║  3. ADMIN_PIN   = รหัส PIN 5 หลักสำหรับผู้ดูแล (ล็อค 3 นาทีถ้าใส่ผิด) ║
 // ╚══════════════════════════════════════════════════════════════╝
 
-const CLOUD_NAME    = "dpyhc69jg";
-const UPLOAD_PRESET = "equipment cmul";
-const ADMIN_PIN     = "47102";
+const CLOUD_NAME    = "ใส่_cloud_name_ตรงนี้";
+const UPLOAD_PRESET = "ใส่_upload_preset_ตรงนี้";
+const ADMIN_PIN     = "12345";
 
 // ═══════════════════════════════════════════════════════════════
 // ด้านล่างนี้ไม่ต้องแก้ไข
@@ -447,24 +448,81 @@ async function refreshData() {
   setTimeout(() => icon.style.animation = "", 800);
 }
 
-// ===== PIN =====
+// ===== PIN (ล็อค 3 นาทีเมื่อใส่ผิด) =====
+let lockUntil = 0;
+let lockTimer = null;
+
+function isLocked() { return Date.now() < lockUntil; }
+
+function startLockCountdown() {
+  const lockEl = document.getElementById("pinLock");
+  const btnEl = document.getElementById("btnPin");
+  const inpEl = document.getElementById("pinInput");
+
+  lockEl.classList.add("show");
+  btnEl.disabled = true;
+  btnEl.style.opacity = ".4";
+  btnEl.style.cursor = "not-allowed";
+  inpEl.disabled = true;
+  inpEl.style.opacity = ".4";
+
+  clearInterval(lockTimer);
+  lockTimer = setInterval(() => {
+    const remain = Math.max(0, lockUntil - Date.now());
+    if (remain <= 0) {
+      clearInterval(lockTimer);
+      lockEl.classList.remove("show");
+      btnEl.disabled = false;
+      btnEl.style.opacity = "1";
+      btnEl.style.cursor = "pointer";
+      inpEl.disabled = false;
+      inpEl.style.opacity = "1";
+      inpEl.value = "";
+      inpEl.focus();
+      return;
+    }
+    const min = Math.floor(remain/60000);
+    const sec = Math.floor((remain%60000)/1000);
+    lockEl.textContent = `⏳ กรุณารอ ${min}:${sec.toString().padStart(2,"0")} นาที แล้วลองใหม่`;
+  }, 200);
+}
+
 function openPin() {
   document.getElementById("pinModal").classList.add("active");
   const inp = document.getElementById("pinInput");
   inp.value=""; inp.classList.remove("error");
   document.getElementById("pinErr").classList.remove("show");
-  setTimeout(() => inp.focus(), 100);
+
+  if (isLocked()) {
+    startLockCountdown();
+  } else {
+    document.getElementById("pinLock").classList.remove("show");
+    document.getElementById("btnPin").disabled = false;
+    document.getElementById("btnPin").style.opacity = "1";
+    document.getElementById("btnPin").style.cursor = "pointer";
+    inp.disabled = false;
+    inp.style.opacity = "1";
+    setTimeout(() => inp.focus(), 100);
+  }
 }
 function closePin() { document.getElementById("pinModal").classList.remove("active"); }
 function checkPin() {
+  if (isLocked()) return;
   const inp = document.getElementById("pinInput");
-  if (inp.value===ADMIN_PIN) { closePin(); openAdmin(); }
-  else {
+  if (inp.value===ADMIN_PIN) {
+    lockUntil = 0;
+    closePin();
+    openAdmin();
+  } else {
     inp.classList.add("error");
     document.getElementById("pinErr").classList.add("show");
     document.getElementById("pinBox").classList.add("shake");
     setTimeout(() => document.getElementById("pinBox").classList.remove("shake"), 500);
     inp.value="";
+
+    // ล็อค 3 นาที
+    lockUntil = Date.now() + 3 * 60 * 1000;
+    startLockCountdown();
   }
 }
 
