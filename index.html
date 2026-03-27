@@ -14,8 +14,6 @@
     font-family: 'Noto Sans Thai', 'Kanit', -apple-system, sans-serif;
     overflow-x: hidden;
   }
-
-  /* Decorative background blobs */
   body::before, body::after {
     content: ''; position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
   }
@@ -24,7 +22,7 @@
 
   .container { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-  /* ============ HEADER ============ */
+  /* ===== HEADER ===== */
   .header {
     padding-top: 40px; display: flex; align-items: flex-start;
     justify-content: space-between; flex-wrap: wrap; gap: 16px;
@@ -52,9 +50,9 @@
 
   .cloud-badge {
     padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 700;
-    display: flex; align-items: center; gap: 6px; background: #DBEAFE; color: #2563EB;
+    display: flex; align-items: center; gap: 6px; background: #DCFCE7; color: #16A34A;
   }
-  .cloud-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #2563EB; animation: pulse 2s infinite; }
+  .cloud-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #16A34A; animation: pulse 2s infinite; }
 
   .btn-refresh {
     padding: 10px 18px; border-radius: 12px; border: 2px solid #E2E8F0;
@@ -64,7 +62,7 @@
   }
   .btn-refresh:hover { border-color: #4ECDC4; color: #0D9488; }
 
-  /* ============ STATS ROW ============ */
+  /* ===== STATS ===== */
   .stats-row {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 14px; margin-top: 28px;
@@ -76,7 +74,7 @@
   .stat-num { font-size: 28px; font-weight: 900; font-family: 'Kanit', sans-serif; }
   .stat-unit { font-size: 12px; color: #94A3B8; font-weight: 600; }
 
-  /* ============ UPDATE BANNER ============ */
+  /* ===== UPDATE BANNER ===== */
   .update-banner {
     margin-top: 20px; padding: 14px 20px; border-radius: 14px;
     background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
@@ -86,7 +84,7 @@
   .update-banner .lbl { color: #94A3B8; font-size: 13px; font-weight: 500; }
   .update-banner .time { color: #FFF; font-size: 14px; font-weight: 700; font-family: 'Kanit', sans-serif; }
 
-  /* ============ EQUIPMENT GRID ============ */
+  /* ===== EQUIPMENT GRID ===== */
   .equip-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 20px; padding: 28px 0 60px;
@@ -117,7 +115,7 @@
 
   .footer { text-align: center; padding: 20px; color: #CBD5E1; font-size: 12px; }
 
-  /* ============ MODAL OVERLAY ============ */
+  /* ===== MODALS ===== */
   .overlay {
     position: fixed; inset: 0; background: rgba(15,23,42,0.6); backdrop-filter: blur(12px);
     display: none; align-items: center; justify-content: center; z-index: 1000;
@@ -130,7 +128,7 @@
   }
   .modal.shake { animation: shake 0.5s ease; }
 
-  /* ============ PIN MODAL ============ */
+  /* PIN Modal */
   .pin-modal { width: 360px; text-align: center; }
   .pin-modal .ic { font-size: 48px; margin-bottom: 12px; }
   .pin-modal h2 { font-size: 20px; font-weight: 800; color: #1E293B; font-family: 'Kanit', sans-serif; }
@@ -139,8 +137,7 @@
     width: 100%; text-align: center; border: 2px solid #E2E8F0;
     border-radius: 14px; padding: 16px; font-size: 28px; font-weight: 800;
     color: #1E293B; outline: none; letter-spacing: 12px;
-    font-family: 'Kanit', sans-serif; background: #F8FAFC;
-    transition: border-color 0.2s;
+    font-family: 'Kanit', sans-serif; background: #F8FAFC; transition: border-color 0.2s;
   }
   .pin-input:focus { border-color: #A78BFA; }
   .pin-input.error { border-color: #FCA5A5; background: #FEF2F2; }
@@ -152,14 +149,13 @@
     margin-top: 20px; width: 100%; padding: 14px; border-radius: 14px; border: none;
     background: linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%);
     color: #FFF; font-size: 15px; font-weight: 700; cursor: pointer;
-    box-shadow: 0 8px 24px #A78BFA40; font-family: 'Kanit', sans-serif;
-    transition: all 0.3s;
+    box-shadow: 0 8px 24px #A78BFA40; font-family: 'Kanit', sans-serif; transition: all 0.3s;
   }
   .btn-pin:hover { transform: translateY(-2px); }
   .btn-pin:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
   .pin-hint { margin-top: 16px; font-size: 12px; color: #CBD5E1; }
 
-  /* ============ ADMIN MODAL ============ */
+  /* Admin Modal */
   .admin-modal { max-width: 560px; width: 92%; max-height: 85vh; overflow-y: auto; padding: 36px; }
   .admin-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
   .admin-head h2 { font-size: 22px; font-weight: 800; color: #1E293B; font-family: 'Kanit', sans-serif; }
@@ -170,7 +166,6 @@
     display: flex; align-items: center; justify-content: center; transition: all 0.2s;
   }
   .btn-close:hover { background: #FEE2E2; color: #DC2626; }
-
   .edit-row {
     display: flex; align-items: center; gap: 14px;
     padding: 14px 18px; border-radius: 14px; background: #F8FAFC;
@@ -192,25 +187,22 @@
   .q-input {
     width: 60px; text-align: center; border: 2px solid #E2E8F0;
     border-radius: 10px; padding: 8px 4px; font-size: 18px; font-weight: 800;
-    color: #1E293B; outline: none; font-family: 'Kanit', sans-serif;
-    transition: border-color 0.2s;
+    color: #1E293B; outline: none; font-family: 'Kanit', sans-serif; transition: border-color 0.2s;
   }
   .q-input:focus { border-color: #7C3AED; }
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
   input[type=number] { -moz-appearance: textfield; }
-
   .btn-save {
     margin-top: 24px; width: 100%; padding: 16px; border-radius: 14px; border: none;
     background: linear-gradient(135deg, #4ECDC4 0%, #44B09E 100%);
     color: #FFF; font-size: 16px; font-weight: 800; cursor: pointer;
-    box-shadow: 0 8px 24px #4ECDC440; font-family: 'Kanit', sans-serif;
-    transition: all 0.3s;
+    box-shadow: 0 8px 24px #4ECDC440; font-family: 'Kanit', sans-serif; transition: all 0.3s;
   }
   .btn-save:hover { transform: translateY(-2px); }
   .btn-save:disabled { opacity: 0.6; cursor: wait; }
 
-  /* ============ TOAST ============ */
+  /* Toast */
   .toast {
     position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
     padding: 14px 32px; border-radius: 16px; font-weight: 700; font-size: 15px;
@@ -221,7 +213,7 @@
   .toast.err { background: linear-gradient(135deg, #DC2626, #EF4444); color: #FFF; box-shadow: 0 12px 32px #DC262640; }
   .toast.show { display: block; }
 
-  /* ============ LOADING ============ */
+  /* Loading */
   .loader {
     min-height: 100vh; display: flex; align-items: center; justify-content: center;
     position: relative; z-index: 1; text-align: center;
@@ -229,7 +221,7 @@
   .loader-icon { font-size: 48px; animation: pulse 1.5s infinite; }
   .loader-text { color: #64748B; font-family: 'Kanit', sans-serif; margin-top: 12px; }
 
-  /* ============ ANIMATIONS ============ */
+  /* Animations */
   @keyframes cardIn { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes slideUp { from { opacity: 0; transform: translateY(40px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -242,7 +234,6 @@
 
   .hidden { display: none !important; }
 
-  /* ============ RESPONSIVE ============ */
   @media (max-width: 600px) {
     .header { flex-direction: column; align-items: flex-start; }
     .header-sub { padding-left: 0; }
@@ -254,14 +245,13 @@
 </head>
 <body>
 
-<!-- Toast notification -->
 <div class="toast" id="toast"></div>
 
-<!-- Loading screen -->
+<!-- Loading -->
 <div class="loader" id="loader">
   <div>
     <div class="loader-icon">📦</div>
-    <p class="loader-text">กำลังโหลดข้อมูลอุปกรณ์...</p>
+    <p class="loader-text">กำลังโหลดข้อมูลจาก Google Sheets...</p>
   </div>
 </div>
 
@@ -279,7 +269,7 @@
       <p class="msg-err" id="msgErr"></p>
       <p class="msg-lock" id="msgLock"></p>
       <button class="btn-pin" id="btnPin" onclick="checkPin()">เข้าสู่ระบบ</button>
-      <p class="pin-hint">รหัสคือเครื่องปริ้น Chansa</p>
+      <p class="pin-hint">รหัสเครื่องปริ้น คุณ CHANSA</p>
     </div>
   </div>
 
@@ -300,7 +290,6 @@
 
   <!-- Dashboard -->
   <div class="container">
-
     <div class="header">
       <div>
         <div class="header-left">
@@ -310,7 +299,7 @@
         <p class="header-sub">Equipment Inventory Dashboard</p>
       </div>
       <div class="header-right">
-        <div class="cloud-badge"><span class="dot"></span> ☁️ Cloudinary</div>
+        <div class="cloud-badge"><span class="dot"></span> 📗 Google Sheets</div>
         <button class="btn-refresh" onclick="refreshData()">
           <span id="refIcon" style="display:inline-block">🔄</span> รีเฟรช
         </button>
@@ -328,31 +317,26 @@
 
     <div class="equip-grid" id="grid"></div>
 
-    <div class="footer">☁️ Equipment Inventory — Powered by Cloudinary</div>
+    <div class="footer">📗 Equipment Inventory — Powered by Google Sheets</div>
   </div>
 </div>
 
 <!-- ==================== JAVASCRIPT ==================== -->
 <script>
 
-// ╔════════════════════════════════════════════════════════════════════╗
-// ║  ✏️  แก้ไข 3 ค่านี้ก่อน Deploy !!                                  ║
-// ║                                                                    ║
-// ║  CLOUD_NAME    = Cloud Name จาก Cloudinary Dashboard               ║
-// ║  UPLOAD_PRESET = ชื่อ Upload Preset (ต้องเป็น Unsigned)              ║
-// ║  ADMIN_PIN     = รหัส PIN 5 หลักสำหรับผู้ดูแล                       ║
-// ║                  (ผิด 3 ครั้ง → ล็อค 3 นาที)                        ║
-// ╚════════════════════════════════════════════════════════════════════╝
+// ╔════════════════════════════════════════════════════════════════════════╗
+// ║  ✏️  แก้ไข 2 ค่านี้ก่อน Deploy !!                                      ║
+// ║                                                                        ║
+// ║  APPS_SCRIPT_URL = URL จาก Google Apps Script (Deploy → Web App)       ║
+// ║  ADMIN_PIN       = รหัส PIN 5 หลัก (ผิด 3 ครั้ง → ล็อค 3 นาที)         ║
+// ╚════════════════════════════════════════════════════════════════════════╝
 
-const CLOUD_NAME    = "dpyhc69jg";
-const UPLOAD_PRESET = "equiplib";
-const ADMIN_PIN     = "47102";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBl5N_EIL9ufrlSZGD3tJwn-yVH6ZeSz_s77Z5qHR1un8vozEO62kZT2sfSVZMI-D9Zg/exec";
+const ADMIN_PIN       = "47102";
 
-// ══════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════
 //  ด้านล่างนี้ไม่ต้องแก้ไข
-// ══════════════════════════════════════════════════════════════════════
-
-const FILE_ID = "equipment_inventory_data";
+// ═══════════════════════════════════════════════════════════════════════
 
 const ITEMS = [
   { id: "power_strip",  name: "ปลั๊กไฟ",                 nameEn: "Power Strip",          icon: "🔌", qty: 10, color: "#FF6B35", bg: "linear-gradient(135deg, #FF6B35, #F7C948)" },
@@ -368,69 +352,54 @@ let equipment = [];
 let lastUpdate = null;
 
 
-// ════════════════════════════════════════
-//  CLOUDINARY — อ่าน/เขียนข้อมูล
-// ════════════════════════════════════════
+// ════════════════════════════
+//  GOOGLE SHEETS — อ่าน/เขียน
+// ════════════════════════════
 
-async function loadFromCloud() {
-  const url = `https://res.cloudinary.com/${CLOUD_NAME}/raw/upload/${FILE_ID}.json?t=${Date.now()}`;
+async function loadFromSheets() {
   try {
-    const res = await fetch(url);
-    if (res.ok) {
-      const data = await res.json();
-      equipment = ITEMS.map(def => {
-        const saved = (data.items || []).find(i => i.id === def.id);
-        return saved ? { ...def, qty: saved.qty } : { ...def };
-      });
-      lastUpdate = data.lastUpdate || null;
-    } else {
-      equipment = ITEMS.map(d => ({ ...d }));
-    }
+    const res = await fetch(APPS_SCRIPT_URL);
+    const data = await res.json();
+
+    equipment = ITEMS.map(def => {
+      const saved = (data.items || []).find(i => i.id === def.id);
+      return saved ? { ...def, qty: saved.qty } : { ...def };
+    });
+    lastUpdate = data.lastUpdate || null;
   } catch (e) {
-    console.warn("Cloud fetch failed:", e);
+    console.warn("Load failed:", e);
     equipment = ITEMS.map(d => ({ ...d }));
   }
 }
 
-async function saveToCloud() {
-  const payload = JSON.stringify({
-    items: equipment.map(e => ({ id: e.id, qty: e.qty })),
-    lastUpdate: lastUpdate,
-  });
-
-  const blob = new Blob([payload], { type: "application/json" });
-  const fd = new FormData();
-  fd.append("file", blob, FILE_ID + ".json");
-  fd.append("upload_preset", UPLOAD_PRESET);
-  fd.append("public_id", FILE_ID);
-  fd.append("resource_type", "raw");
-  fd.append("overwrite", "true");
-  fd.append("invalidate", "true");
-
-  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`, {
+async function saveToSheets(items, updateTime) {
+  const res = await fetch(APPS_SCRIPT_URL, {
     method: "POST",
-    body: fd,
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      items: items.map(e => ({ id: e.id, qty: e.qty })),
+      lastUpdate: updateTime,
+    }),
   });
-
-  if (!res.ok) throw new Error("Upload failed: " + res.status);
+  const data = await res.json();
+  if (!data.success) throw new Error(data.error || "บันทึกไม่สำเร็จ");
 }
 
 
-// ════════════════════════════════════════
-//  RENDER — วาดหน้า Dashboard
-// ════════════════════════════════════════
+// ════════════════════════════
+//  RENDER — วาด Dashboard
+// ════════════════════════════
 
 function render() {
-  // Stats summary
   const total = equipment.reduce((s, e) => s + e.qty, 0);
   const low   = equipment.filter(e => e.qty > 0 && e.qty <= 3).length;
   const out   = equipment.filter(e => e.qty === 0).length;
 
   const stats = [
-    { label: "อุปกรณ์ทั้งหมด",   val: total,            unit: "ชิ้น",    color: "#4ECDC4", bgc: "#F0FDFA", icon: "📊" },
-    { label: "ประเภทอุปกรณ์",   val: equipment.length,  unit: "ประเภท",  color: "#7C3AED", bgc: "#F5F3FF", icon: "📋" },
-    { label: "เหลือน้อย",       val: low,               unit: "รายการ",  color: "#F59E0B", bgc: "#FFFBEB", icon: "⚠️" },
-    { label: "หมดแล้ว",         val: out,               unit: "รายการ",  color: "#DC2626", bgc: "#FEF2F2", icon: "🚫" },
+    { label: "อุปกรณ์ทั้งหมด", val: total, unit: "ชิ้น", color: "#4ECDC4", bgc: "#F0FDFA", icon: "📊" },
+    { label: "ประเภทอุปกรณ์", val: equipment.length, unit: "ประเภท", color: "#7C3AED", bgc: "#F5F3FF", icon: "📋" },
+    { label: "เหลือน้อย", val: low, unit: "รายการ", color: "#F59E0B", bgc: "#FFFBEB", icon: "⚠️" },
+    { label: "หมดแล้ว", val: out, unit: "รายการ", color: "#DC2626", bgc: "#FEF2F2", icon: "🚫" },
   ];
 
   document.getElementById("statsRow").innerHTML = stats.map((s, i) =>
@@ -440,10 +409,8 @@ function render() {
     </div>`
   ).join("");
 
-  // Equipment cards
   document.getElementById("grid").innerHTML = equipment.map((it, i) => {
-    const isEmpty = it.qty === 0;
-    const isLow   = it.qty > 0 && it.qty <= 3;
+    const isEmpty = it.qty === 0, isLow = it.qty > 0 && it.qty <= 3;
     const bc = isEmpty ? "badge-out" : isLow ? "badge-low" : "badge-ok";
     const bt = isEmpty ? "หมด" : isLow ? "เหลือน้อย" : "พร้อมใช้";
     const barC = isEmpty ? "#DC2626" : isLow ? "#F59E0B" : it.bg;
@@ -472,15 +439,15 @@ function render() {
 }
 
 
-// ════════════════════════════════════════
-//  REFRESH — รีเฟรชข้อมูลจาก Cloud
-// ════════════════════════════════════════
+// ════════════════════════════
+//  REFRESH
+// ════════════════════════════
 
 async function refreshData() {
   const icon = document.getElementById("refIcon");
   icon.style.animation = "spin .8s linear";
   try {
-    await loadFromCloud();
+    await loadFromSheets();
     render();
     toast("✅ โหลดข้อมูลล่าสุดแล้ว", "ok");
   } catch (e) {
@@ -490,113 +457,88 @@ async function refreshData() {
 }
 
 
-// ════════════════════════════════════════
-//  PIN — ระบบรหัสผ่าน + ล็อค 3 นาที
-// ════════════════════════════════════════
+// ════════════════════════════
+//  PIN — 5 หลัก, ผิด 3 ครั้งล็อค 3 นาที
+// ════════════════════════════
 
-let failCount = 0;       // จำนวนครั้งที่ใส่ผิด
-let lockUntil = 0;       // เวลาที่ปลดล็อค (timestamp)
-let lockTimer = null;    // interval สำหรับนับถอยหลัง
+let failCount = 0;
+let lockUntil = 0;
+let lockTimer = null;
 
-function isLocked() {
-  return Date.now() < lockUntil;
-}
+function isLocked() { return Date.now() < lockUntil; }
 
-function setInputEnabled(enabled) {
-  const inp = document.getElementById("pinInput");
-  const btn = document.getElementById("btnPin");
-  inp.disabled = !enabled;
-  btn.disabled = !enabled;
+function setPinEnabled(on) {
+  document.getElementById("pinInput").disabled = !on;
+  document.getElementById("btnPin").disabled = !on;
 }
 
 function startLockCountdown() {
-  const lockEl = document.getElementById("msgLock");
-  setInputEnabled(false);
-  lockEl.classList.add("show");
+  const el = document.getElementById("msgLock");
+  setPinEnabled(false);
+  el.classList.add("show");
 
   clearInterval(lockTimer);
   lockTimer = setInterval(() => {
     const remain = Math.max(0, lockUntil - Date.now());
     if (remain <= 0) {
       clearInterval(lockTimer);
-      lockEl.classList.remove("show");
-      setInputEnabled(true);
+      el.classList.remove("show");
+      setPinEnabled(true);
       const inp = document.getElementById("pinInput");
-      inp.value = "";
-      inp.classList.remove("error");
+      inp.value = ""; inp.classList.remove("error");
       document.getElementById("msgErr").classList.remove("show");
       inp.focus();
       return;
     }
-    const min = Math.floor(remain / 60000);
-    const sec = Math.floor((remain % 60000) / 1000);
-    lockEl.textContent = `⏳ ใส่รหัสผิดเกินกำหนด กรุณารอ ${min}:${sec.toString().padStart(2, "0")} นาที`;
+    const m = Math.floor(remain / 60000);
+    const s = Math.floor((remain % 60000) / 1000);
+    el.textContent = `⏳ ใส่รหัสผิดเกินกำหนด กรุณารอ ${m}:${s.toString().padStart(2, "0")} นาที`;
   }, 200);
 }
 
-// เปิด PIN modal
 function openPin() {
   document.getElementById("pinOverlay").classList.add("active");
   const inp = document.getElementById("pinInput");
-  inp.value = "";
-  inp.classList.remove("error");
+  inp.value = ""; inp.classList.remove("error");
   document.getElementById("msgErr").classList.remove("show");
 
-  if (isLocked()) {
-    startLockCountdown();
-  } else {
+  if (isLocked()) { startLockCountdown(); }
+  else {
     document.getElementById("msgLock").classList.remove("show");
-    setInputEnabled(true);
+    setPinEnabled(true);
     setTimeout(() => inp.focus(), 100);
   }
 }
 
-// ปิด PIN modal
-function closePin() {
-  document.getElementById("pinOverlay").classList.remove("active");
-}
+function closePin() { document.getElementById("pinOverlay").classList.remove("active"); }
 
-// เมื่อพิมพ์ใน PIN input — ลบตัวอักษรที่ไม่ใช่ตัวเลข + auto submit เมื่อครบ 5 ตัว
 function onPinInput(el) {
   el.value = el.value.replace(/\D/g, "");
-  if (el.value.length === 5) {
-    checkPin();
-  }
+  if (el.value.length === 5) checkPin();
 }
 
-// เช็ครหัส PIN
 function checkPin() {
   if (isLocked()) return;
-
   const inp = document.getElementById("pinInput");
   const errEl = document.getElementById("msgErr");
 
   if (inp.value === ADMIN_PIN) {
-    // รหัสถูก → รีเซ็ตทุกอย่าง แล้วเปิดหน้า Admin
-    failCount = 0;
-    lockUntil = 0;
-    closePin();
-    openAdmin();
+    failCount = 0; lockUntil = 0;
+    closePin(); openAdmin();
   } else {
-    // รหัสผิด
     failCount++;
-    const remaining = 3 - failCount;
+    const left = 3 - failCount;
 
     inp.classList.add("error");
     errEl.classList.add("show");
+    errEl.textContent = left > 0
+      ? `❌ รหัสไม่ถูกต้อง (เหลือโอกาสอีก ${left} ครั้ง)`
+      : "❌ ใส่รหัสผิดครบ 3 ครั้ง";
 
-    if (remaining > 0) {
-      errEl.textContent = `❌ รหัสไม่ถูกต้อง (เหลือโอกาสอีก ${remaining} ครั้ง)`;
-    } else {
-      errEl.textContent = "❌ ใส่รหัสผิดครบ 3 ครั้ง";
-    }
-
-    // สั่นกล่อง
     document.getElementById("pinBox").classList.add("shake");
     setTimeout(() => document.getElementById("pinBox").classList.remove("shake"), 500);
     inp.value = "";
 
-    // ผิดครบ 3 ครั้ง → ล็อค 3 นาที
     if (failCount >= 3) {
       lockUntil = Date.now() + 3 * 60 * 1000;
       failCount = 0;
@@ -606,18 +548,15 @@ function checkPin() {
 }
 
 
-// ════════════════════════════════════════
-//  ADMIN — หน้าแก้ไขจำนวนอุปกรณ์
-// ════════════════════════════════════════
+// ════════════════════════════
+//  ADMIN — แก้ไขจำนวน
+// ════════════════════════════
 
 function openAdmin() {
   document.getElementById("editList").innerHTML = equipment.map((it, i) =>
     `<div class="edit-row">
       <span class="edit-icon">${it.icon}</span>
-      <div class="edit-info">
-        <div class="edit-name">${it.name}</div>
-        <div class="edit-sub">${it.nameEn}</div>
-      </div>
+      <div class="edit-info"><div class="edit-name">${it.name}</div><div class="edit-sub">${it.nameEn}</div></div>
       <div class="edit-ctrl">
         <button class="btn-m" onclick="adj(${i},-1)">−</button>
         <input type="number" class="q-input" id="q${i}" min="0" value="${it.qty}">
@@ -628,83 +567,64 @@ function openAdmin() {
   document.getElementById("adminOverlay").classList.add("active");
 }
 
-function closeAdmin() {
-  document.getElementById("adminOverlay").classList.remove("active");
-}
-
-function adj(i, d) {
-  const el = document.getElementById("q" + i);
-  el.value = Math.max(0, (parseInt(el.value) || 0) + d);
-}
+function closeAdmin() { document.getElementById("adminOverlay").classList.remove("active"); }
+function adj(i, d) { const el = document.getElementById("q" + i); el.value = Math.max(0, (parseInt(el.value) || 0) + d); }
 
 async function saveData() {
   const btn = document.getElementById("btnSave");
-  btn.disabled = true;
-  btn.textContent = "⏳ กำลังบันทึก...";
+  btn.disabled = true; btn.textContent = "⏳ กำลังบันทึกลง Google Sheets...";
 
-  // อ่านค่าจาก input
   equipment.forEach((it, i) => {
     it.qty = Math.max(0, parseInt(document.getElementById("q" + i).value) || 0);
   });
 
-  // บันทึกเวลาที่อัปเดต
   lastUpdate = new Date().toLocaleString("th-TH", {
-    timeZone: "Asia/Bangkok",
-    year: "numeric", month: "long", day: "numeric",
+    timeZone: "Asia/Bangkok", year: "numeric", month: "long", day: "numeric",
     hour: "2-digit", minute: "2-digit", second: "2-digit",
   });
 
   try {
-    await saveToCloud();
-    closeAdmin();
-    render();
+    await saveToSheets(equipment, lastUpdate);
+    closeAdmin(); render();
     toast("✅ บันทึกสำเร็จ!", "ok");
   } catch (e) {
     console.error(e);
-    toast("❌ บันทึกไม่สำเร็จ — ตรวจสอบ Cloudinary Config", "err");
+    toast("❌ บันทึกไม่สำเร็จ: " + e.message, "err");
   }
 
-  btn.disabled = false;
-  btn.textContent = "💾 บันทึกข้อมูล";
+  btn.disabled = false; btn.textContent = "💾 บันทึกข้อมูล";
 }
 
 
-// ════════════════════════════════════════
-//  TOAST — แจ้งเตือน
-// ════════════════════════════════════════
+// ════════════════════════════
+//  TOAST + EVENTS
+// ════════════════════════════
 
 function toast(msg, type) {
   const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = "toast " + type + " show";
-  t.style.animation = "none";
-  t.offsetHeight; // force reflow
+  t.textContent = msg; t.className = "toast " + type + " show";
+  t.style.animation = "none"; t.offsetHeight;
   t.style.animation = "flashIn 2.5s ease forwards";
   setTimeout(() => t.classList.remove("show"), 2600);
 }
-
-
-// ════════════════════════════════════════
-//  EVENTS — ปิด modal เมื่อกด overlay
-// ════════════════════════════════════════
 
 document.getElementById("pinOverlay").addEventListener("click", closePin);
 document.getElementById("adminOverlay").addEventListener("click", closeAdmin);
 
 
-// ════════════════════════════════════════
-//  INIT — เริ่มต้นแอป
-// ════════════════════════════════════════
+// ════════════════════════════
+//  INIT
+// ════════════════════════════
 
 (async () => {
-  await loadFromCloud();
+  await loadFromSheets();
   document.getElementById("loader").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
   render();
 
   // Auto-refresh ทุก 30 วินาที
   setInterval(async () => {
-    try { await loadFromCloud(); render(); } catch (e) {}
+    try { await loadFromSheets(); render(); } catch (e) {}
   }, 30000);
 })();
 
