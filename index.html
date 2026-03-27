@@ -414,7 +414,7 @@ function render() {
   document.getElementById("grid").innerHTML = equipment.map((it, i) => {
     const isEmpty = it.qty === 0, isLow = it.qty > 0 && it.qty <= 3;
     const bc = isEmpty ? "badge-out" : isLow ? "badge-low" : "badge-ok";
-    const bt = isEmpty ? "หมด" : isLow ? "เหลือน้อย" : "พร้อมใช้";
+    const bt = isEmpty ? "หมดลึ้งจ้า" : isLow ? "เหลือน้อย ขะใจ๋มาเอาเน้อ" : "เหลือปะเล๊อะ";
     const barC = isEmpty ? "#DC2626" : isLow ? "#F59E0B" : it.bg;
     const bw = Math.min((it.qty / 20) * 100, 100);
 
